@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varietyz Clan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content {
+            background-color: #333; /* Graphite background color */
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            color: #fff; /* Adjusted text color */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: white; /* Adjusted close button color */
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .continue-button {
+            display: block;
+            margin: auto;
+            padding: 10px 20px;
+            background-color: #555555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .continue-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Popup Container -->
+    <div id="popupContainer" class="popup">
+        <div class="popup-content">
+            <span class="close" id="closeButton">&times;</span>
+            <h2>Varietyz Clan</h2>
+
+            <p><strong>Introduction:</strong></p>
+            <p>Welcome to the Varietyz Members List webpage! This page provides a comprehensive overview of the members within the Varietyz group, showcasing their ranks, experience, and other relevant information. Whether you're a member of the Varietyz community or simply interested in exploring player profiles, this webpage offers a user-friendly interface and a range of functionalities to enhance your experience.</p>
+            
+            <hr>
+            
+            <p><strong>Features:</strong></p>
+            <ol>
+                <li><strong>Dynamic Member Display:</strong>
+                    <ul>
+                        <li>The webpage dynamically fetches data from the WiseOldMan API to display the list of Varietyz members.</li>
+                        <li>Each member is represented by a player card, showcasing their name, rank, and additional information.</li>
+                    </ul>
+                </li>
+                <hr>
+                <li><strong>Search Functionality:</strong>
+                    <ul>
+                        <li>Utilize the search input field to quickly find specific members by name or rank.</li>
+                        <li>As you type your search query, the webpage filters the displayed player cards in real-time, making it easy to locate desired profiles.</li>
+                    </ul>
+                </li>
+                <hr>
+                <li><strong>Exact Match Highlighting:</strong>
+                    <ul>
+                        <li>Upon entering a search query, exact matches are highlighted in green, providing visual cues for precise identification.</li>
+                    </ul>
+                </li>
+                <hr>
+                <li><strong>Keyboard Navigation:</strong>
+                    <ul>
+                        <li>Enhance accessibility and efficiency by utilizing keyboard navigation:</li>
+                        <li>Press the "Enter" key after typing your search query to initiate a search.</li>
+                        <li>When an exact match is highlighted in green, pressing "Enter" opens the WiseOldMan page of that member in a new tab.</li>
+                    </ul>
+                </li>
+                <hr>
+                <li><strong>Detailed Player Information:</strong>
+                    <ul>
+                        <li>Hover over a player card to view additional information, including total experience and last progression date.</li>
+                        <li>Click on a player card to view detailed statistics and insights on WiseOldMan's platform.</li>
+                    </ul>
+                </li>
+                <hr>
+                <li><strong>Interactive Rank Counters:</strong>
+                    <ul>
+                        <li>Discover the distribution of ranks within the Varietyz group through interactive rank counters.</li>
+                        <li>Each counter box displays the number of members holding a specific rank, providing insights into the group's composition.</li>
+                    </ul>
+                </li>
+                <hr>
+                <li><strong>External Links:</strong>
+                    <ul>
+                        <li>Access external resources and platforms related to Varietyz via the navigation buttons:</li>
+                        <li>Join us on Discord: Connect with the Varietyz community on Discord.</li>
+                        <li>Go back to Homepage: Navigate to the Varietyz homepage for more information.</li>
+                        <li>Refresh Page: Reload the webpage to fetch the latest data from the WiseOldMan API.</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <hr>
+            <button id="continueButton" class="continue-button">Go Back</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+                // Open the popup if it hasn't been displayed before
+                document.getElementById("popupContainer").style.display = "block";
+
+            // Close the popup when the close button is clicked
+            document.getElementById("closeButton").addEventListener("click", function () {
+                document.getElementById("popupContainer").style.display = "none";
+            });
+
+            // Continue button functionality
+            document.getElementById("continueButton").addEventListener("click", function () {
+                document.getElementById("popupContainer").style.display = "none";
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varietyz - Members List</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1f1f1f; /* Dark background color */
+    color: #ffffff; /* Text color */
+  }
+  
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1026px;
+    margin: 0 auto;
+  }
+  
+/* CSS styles for the player card container */
+.player-card {
+  border: 1px solid #333333;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #333333;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative; /* Enable relative positioning */
+}
+
+/* CSS styles for the extra information (Alt text) */
+.player-card .extra-info {
+  position: absolute; /* Position the Alt text */
+  top: 5px; /* Adjust top position */
+  right: 5px; /* Adjust right position */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  color: #ffffff; /* Text color */
+  padding: 5px 10px; /* Add padding for better visibility */
+  border-radius: 3px; /* Rounded corners */
+}
+
+
+  .rank-counters-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1026px;
+    margin: 20px auto 0; /* Adjust margin to provide space between player profiles and rank counters */
+  }
+  
+
+  .player-card h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    flex: 1; /* Take up remaining space */
+    color: #ffffff; /* Text color */
+  }
+
+  .player-card img {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+  }
+
+  .player-card p {
+    margin: 5px 0;
+    color: #cccccc; /* Lighter text color */
+  }
+
+  .error-message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    color: red;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    border: 1px solid #333333; /* Darker border color */
+    border-radius: 5px;
+    background-color: #333333; /* Darker background color */
+    color: #ffffff; /* Text color */
+  }
+
+  .counter-box {
+    background-color: #333333; /* Darker background color */
+    border: 1px solid #333333; /* Darker border color */
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    color: #ffffff; /* Text color */
+  }
+
+  .counter-box img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+
+  .counter-box p {
+    margin: 0;
+    color: #ffffff; /* Text color */
+  }
+
+  /* New style for rank boxes */
+  .rank-box {
+    background-color: #333333;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px; /* Add margin bottom */
+  }
+
+  .rank-box img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+
+  .rank-box p {
+    margin: 0;
+    color: #ffffff;
+  }
+
+  .center-container {
+    display: flex;
+    justify-content: center; /* Center the container horizontally */
+    height: 10vh; /* Set the container height to full viewport height */
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .clickable {
+    cursor: pointer; /* Change cursor to click hand */
+}
+
+  .logo {
+    width: 41px;
+    height: 41px;
+    margin-right: 10px;
+  }
+  .button-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-top: 20px; /* Adjust as needed */
+  }
+  
+  .button-container button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #333333;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button-container button:hover {
+    background-color: #555555;
+  }
+  
+  h1 {
+    margin: 0;
+    font-size: 24px; /* Adjust font size if needed */
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <nav>
+<div class="button-container">
+  <button onclick="window.location.href = 'https://enigma-esports.eu'">Go back to Homepage</button>
+  <button onclick="window.open('https://discord.gg/7NMtC2Q7SZ', '_blank')">Join us on Discord</button>
+  <button id="helpButton">Info</button>
+  <button onclick="window.location.reload()">Refresh Page</button>
+</div>
+    </nav>
+  </header>
+  
+<div class="center-container">
+  <div class="header">
+    <img src="https://i.ibb.co/Dz9Km0b/Animated-Varietyz-Server-Logo2.gif" alt="Varietyz Logo" class="logo" loading="lazy">
+    <h1>Varietyz - Members List</h1>
+  </div>
+</div>
+
+<div class="grid-container">
+  <!-- Counter boxes -->
+  <div id="totalMembersContainer" class="counter-box clickable">
+    <img src="https://i.ibb.co/w7ZGdkG/Varietyz-Logo-Transp.png" alt="Total Members Icon" loading="lazy">
+    <p>Total Members: <span id="totalMembersCounter"></span></p>
+</div>
+
+  
+  <div class="counter-box">
+    <img src="https://i.ibb.co/hC1Gdmx/Level.png" alt="Total Experience Icon" loading="lazy">
+    <p>Total Experience: <span id="totalExperienceCounter"></span></p>
+  </div>
+  
+  <div class="counter-box">
+    <img src="https://i.ibb.co/CtdR1Pm/010-Max-Cape-Badge.png" alt="Last Progressed Date Icon" loading="lazy">
+    <p>Average Last Progression Date: <span id="mostCommonLastProgressedDateCounter"></span></p>
+  </div>
+</div>
+
+<div class="center-container">
+  <input type="text" id="searchInput" class="search-input" placeholder="Search by name or rank" style="max-width: 1026px; max-height: 40px;">
+</div>
+
+
+<div class="grid-container" id="apiData">
+  <!-- Player data will be inserted here -->
+</div>
+<div class="rank-counters-container" id="rankCountersContainer">
+  <!-- Rank counters will be inserted here -->
+</div>
+
+<div class="error-message" id="errorMessage" style="display: none;">Error fetching data. Please try again later.</div>
+
+<script>
+  // JavaScript code
+document.addEventListener("DOMContentLoaded", function () {
+  // Open the popup if it hasn't been displayed before
+  document.getElementById("popupContainer").style.display = "none";
+
+  // Close the popup when the close button is clicked
+  document.getElementById("closeButton").addEventListener("click", function () {
+      document.getElementById("popupContainer").style.display = "none";
+  });
+
+  // Continue button functionality
+  document.getElementById("continueButton").addEventListener("click", function () {
+      document.getElementById("popupContainer").style.display = "none";
+  });
+
+  // Help button functionality to show the popup
+  document.getElementById("helpButton").addEventListener("click", function () {
+      document.getElementById("popupContainer").style.display = "block";
+  });
+});
+
+  fetch('https://api.wiseoldman.net/v2/groups/4361/csv')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+    return response.text();
+  })
+  .then(data => {
+    const gridContainer = document.getElementById('apiData');
+    const rows = data.split('\n');
+    rows.shift(); // Remove header row
+  
+    // Initialize counters
+    let totalMembers = 0;
+    let rankCounts = {};
+    let totalExperience = 0;
+    let lastProgressedMap = new Map();
+  
+    rows.forEach(row => {
+      const [name, rank, experience, lastWOMUpdate, lastProgressed] = row.split(',');
+    
+      // Check if the rank is private and the name matches specific entries
+      let extraInfo = '';
+      if (rank.toLowerCase() === 'private') {
+        const specialCases = {
+          'bowlt0ker': 'BowlToker Alt',
+          'threeie': 'kazooie Alt',
+          'diana mills': 'Adrime Alt',
+          'j abrewzi': 'Abrewzi Alt',
+          'almassizadeh': 'Adrime Alt',
+          'ionlydomossy': 'JustDrastic Alt',
+          'notlordounce': 'Lord Ounce Alt'          
+          // Add more entries as needed
+        };
+        if (specialCases.hasOwnProperty(name.toLowerCase())) {
+          extraInfo = specialCases[name.toLowerCase()];
+        }
+      }
+    
+      // Increment total members counter
+      totalMembers++;
+    
+      // Increment rank counter
+      rankCounts[rank] = (rankCounts[rank] || 0) + 1;
+    
+      // Accumulate total experience
+      totalExperience += parseInt(experience);
+    
+      // Update last progressed map
+      lastProgressedMap.set(lastProgressed, (lastProgressedMap.get(lastProgressed) || 0) + 1);
+    
+      const formattedExperience = Number(experience).toLocaleString(); // Format experience number with commas
+      const formattedRank = formatRank(rank);
+      const playerCard = document.createElement('div');
+      playerCard.classList.add('player-card');
+    
+      // Create a container for the main content and extra information
+      const contentContainer = document.createElement('div');
+      contentContainer.classList.add('content-container');
+    
+      // Add main content to the container
+      contentContainer.innerHTML = `
+        <img src="${getImageUrl(rank)}" alt="${formattedRank}"> <!-- Custom image -->
+        <h2>${name}</h2>
+        <p>Rank: ${formattedRank}</p>
+      `;
+    
+      // If extra information is available, add it to the container
+      if (extraInfo) {
+        const extraInfoElement = document.createElement('p');
+        extraInfoElement.classList.add('extra-info');
+        extraInfoElement.textContent = extraInfo;
+        contentContainer.appendChild(extraInfoElement);
+      }
+    
+      // Append the content container to the player card
+      playerCard.appendChild(contentContainer);
+    
+      // Tooltip
+      playerCard.title = `Total Experience: ${formattedExperience}\nLast OSRS Progress: ${lastWOMUpdate}\nLast WoM Update: ${lastProgressed}`; // Use formattedExperience here
+    
+      // Add click event listener
+      playerCard.addEventListener('click', () => {
+        const playerNameEncoded = encodeURIComponent(name); // Encode player name
+        const playerUrl = `https://wiseoldman.net/players/${playerNameEncoded}`;
+        window.open(playerUrl, '_blank'); // Open link in new tab
+      });
+    
+      gridContainer.appendChild(playerCard);
+    });    
+
+  
+    // Display counters
+    document.getElementById('totalMembersCounter').innerText = totalMembers;
+    document.getElementById('totalExperienceCounter').innerText = totalExperience.toLocaleString();
+    document.getElementById('mostCommonLastProgressedDateCounter').innerText = getMostCommonDate(lastProgressedMap).split(' ')[0];
+    
+// Populate rank boxes
+const rankBoxesContainer = document.getElementById('rankCountersContainer'); // Use the rank counter container
+for (const rank in rankCounts) {
+  const formattedRank = formatRank(rank);
+  const memberCount = rankCounts[rank];
+  
+  // Create a rank box
+  const rankBox = document.createElement('div');
+  rankBox.classList.add('rank-box');
+  rankBox.innerHTML = `
+    <img src="${getImageUrl(rank)}" alt="${formattedRank}" loading="lazy">
+    <p>${formattedRank}: ${memberCount}</p>
+  `;
+  
+  // Add tooltip
+  const memberNames = getMemberNamesByRank(rows, rank);
+  const tooltipText = memberNames ? memberNames.join(', ') : 'No members found';
+  rankBox.title = tooltipText;
+  
+  // Append the rank box to the rank boxes container
+  rankBoxesContainer.appendChild(rankBox);
+}
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+    document.getElementById('errorMessage').style.display = 'block';
+  });  
+  
+  function addSeparators(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }  
+
+function getMostCommonDate(map) {
+  let mostCommonDate;
+  let maxCount = 0;
+  map.forEach((count, date) => {
+    if (count > maxCount && date) {
+      maxCount = count;
+      mostCommonDate = date;
+    }
+  });
+  // If a most common date is found
+  if (mostCommonDate) {
+    return mostCommonDate;
+  } else {
+    // If no common date is found, return N/A
+    return "N/A";
+  }
+}
+
+function getImageUrl(rank) {
+  // Replace this with your custom image URLs based on the rank
+  switch (rank.toLowerCase()) {
+    case 'private':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Private.png?6ade4';
+    case 'bronze':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Bronze.png?a6946';
+    case 'iron':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Iron.png?5d554';
+    case 'steel':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Steel.png?68cb9';
+    case 'mithril':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Mithril.png?5d554'; 
+    case 'adamant':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Adamant.png?68cb9';
+    case 'rune':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Rune.png?5d554';
+    case 'dragon':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Dragon.png?5d554';
+    case 'onyx':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Onyx.png?0f3a8';
+    case 'zenyte':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Zenyte.png?b0561';
+    case 'coordinator':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Coordinator.png?f8e3e';
+    case 'specialist':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Specialist.png?e2054';
+    case 'healer':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Healer.png?92040';
+    case 'moderator':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Moderator.png?24f62';
+    case 'administrator':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Administrator.png?9dc78';
+    case 'deputy_owner':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Deputy_owner.png?b0561';
+    case 'owner':
+      return 'https://oldschool.runescape.wiki/images/Clan_icon_-_Owner.png?53696';
+    // Add more cases for other ranks
+    default:
+      return ''; // Default image URL or empty string
+  }
+}
+
+function formatRank(rank) {
+  // Replace underscores with spaces and capitalize each word
+  return rank.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+}
+
+function getMemberNamesByRank(rows, rank) {
+  const memberNames = [];
+  rows.forEach(row => {
+    const [name, rowRank] = row.split(',');
+    if (rowRank === rank) {
+      memberNames.push(name);
+    }
+  });
+  return memberNames;
+}
+
+// Define a mapping between main names and their alternative accounts
+const alternativeAccounts = {
+  'bowlt0ker': 'BowlToker Alt',
+  'threeie': 'kazooie Alt',
+  'diana mills': 'Adrime Alt',
+  'j abrewzi': 'Abrewzi Alt',
+  'almassizadeh': 'Adrime Alt',
+  'ionlydomossy': 'JustDrastic Alt',
+  'notlordounce': 'Lord Ounce Alt'  
+  // Add more entries as needed
+};
+
+// Function to preprocess data and create a mapping between main names and their alternative accounts
+function createAlternativeAccountsMap() {
+  const map = new Map();
+  for (const mainName in alternativeAccounts) {
+    const altName = alternativeAccounts[mainName];
+    map.set(mainName.toLowerCase(), altName.toLowerCase());
+  }
+  return map;
+}
+
+// Create the alternative accounts map
+const alternativeAccountsMap = createAlternativeAccountsMap();
+
+// Search functionality
+document.getElementById("searchInput").addEventListener("input", function(event) {
+  const searchValue = this.value.toLowerCase();
+  const playerCards = document.querySelectorAll('.player-card');
+
+  let foundCount = 0;
+  let exactMatchFound = false; // Track if an exact match is found
+
+  playerCards.forEach(card => {
+    const playerName = card.querySelector('h2').innerText.toLowerCase();
+    const rank = card.querySelector('p').innerText.toLowerCase();
+
+    let displayCard = false;
+
+    // Check if the playerName matches the searchValue or if it matches any main name in the alternativeAccountsMap
+    if (playerName.includes(searchValue) || alternativeAccountsMap.has(playerName) && alternativeAccountsMap.get(playerName).includes(searchValue)) {
+      displayCard = true;
+    }
+
+    // Check for exact match
+    if (playerName === searchValue) {
+      displayCard = true;
+      exactMatchFound = true;
+    }
+
+    if (displayCard) {
+      card.style.display = 'block';
+      card.querySelector('img').style.display = 'block'; // Ensure the rank image is displayed
+      card.querySelector('h2').style.display = 'block'; // Ensure the player name is displayed
+      card.querySelector('p').style.display = 'block'; // Ensure the rank text is displayed
+      foundCount++;
+      card.style.backgroundColor = '#333333'; // Reset to original color
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Change background color if only one result is found
+  if (exactMatchFound) {
+    playerCards.forEach(card => {
+      const playerName = card.querySelector('h2').innerText.toLowerCase();
+      if (playerName === searchValue) {
+        card.style.backgroundColor = '#4CAF50'; // Green color
+      }
+    });
+  }
+
+  // Check if the search input value is empty
+  if (searchValue === '') {
+    playerCards.forEach(card => {
+      card.style.display = 'block'; // Show all player cards
+      card.querySelector('img').style.display = 'block'; // Ensure the rank image is displayed
+      card.querySelector('h2').style.display = 'block'; // Ensure the player name is displayed
+      card.querySelector('p').style.display = 'block'; // Ensure the rank text is displayed
+      card.style.backgroundColor = '#333333'; // Reset to original color
+    });
+  }
+});
+
+// Event listener for 'Enter' key press
+document.getElementById("searchInput").addEventListener("keypress", function(event) {
+  if (event.key === 'Enter') {
+    const searchValue = this.value.toLowerCase();
+    const playerCards = document.querySelectorAll('.player-card');
+
+    playerCards.forEach(card => {
+      const playerName = card.querySelector('h2').innerText.toLowerCase();
+      if (playerName === searchValue) {
+        const playerNameEncoded = encodeURIComponent(playerName); // Encode player name
+        const playerUrl = `https://wiseoldman.net/players/${playerNameEncoded}`;
+        window.open(playerUrl, '_blank'); // Open WiseOldMan page for the player in a new tab
+      }
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Get the total members container
+  const totalMembersContainer = document.getElementById('totalMembersContainer');
+
+  // Add click event listener to the container
+  totalMembersContainer.addEventListener('click', function() {
+      // Redirect to the specified URL in a new tab
+      window.open('https://wiseoldman.net/groups/4361', '_blank');
+  });
+});
+
+
+
+</script>
+
+</body>
+</html>
